@@ -31,7 +31,7 @@ var app = {
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicitly call 'app.receivedEvent(...);'
+    // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
     },
@@ -45,7 +45,29 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+    },
+
+    takePicture: function() {
+      navigator.camera.getPicture( function( imageURI ) {
+      alert( imageURI );
+	  
+	  var largeImage = document.getElementById('largeImage');
+      // Unhide image elements
+      //
+      largeImage.style.display = 'block';
+      // Show the captured photo
+      // The inline CSS rules are used to resize the image
+      //
+      largeImage.src = imageURI;
+	  
+	  
+      },
+      function( message ) {
+        alert( message );
+      },
+      {
+        quality: 50,
+        destinationType: Camera.DestinationType.FILE_URI
+      });
     }
 };
-
-app.initialize();
